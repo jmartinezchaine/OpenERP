@@ -409,21 +409,21 @@ label.error {
     text-align: center;
     padding:0;
 }
-.openerp .menu a {
+.openerp .menu a {(#eed242, #baaa48)
     display:block;
     min-width: 60px;
     height: 20px;
     margin: 3px 2px;
     padding: 0 8px;
 
-    background: #bd5e54; /* Old browsers */
-    background: -moz-linear-gradient(top, #13616e 0%, #13394c 60%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#13616e), color-stop(60%,#13394c)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #13616e 0%,#13394c 60%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #13616e 0%,#13394c 60%); /* Opera11.10+ */
-    background: -ms-linear-gradient(top, #13616e 0%,#13394c 60%); /* IE10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#13616e', endColorstr='#13394c',GradientType=0 ); /* IE6-9 */
-    background: linear-gradient(top, #13616e 0%,#13394c 60%); /* W3C */
+    background: #eed242; /* Old browsers */
+    background: -moz-linear-gradient(top, #eed242 0%, #baaa48 60%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eed242), color-stop(60%,#baaa48)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #eed242 0%,#baaa48 60%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #eed242 0%,#baaa48 60%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #eed242 0%,#baaa48 60%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eed242', endColorstr='#baaa48',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #eed242 0%,#baaa48 60%); /* W3C */
 
     border: 1px solid #5E1A14;
     border-radius: 4px;
@@ -2051,7 +2051,7 @@ ul.oe-arrow-list li {
 ul.oe-arrow-list li span {
     vertical-align: top;
     display: inline-block;
-    border: 1em solid #13394c;
+    border: 1em solid #baaa48;
     line-height:0em;
 }
 ul.oe-arrow-list .oe-arrow-list-before {
@@ -2060,7 +2060,7 @@ ul.oe-arrow-list .oe-arrow-list-before {
 }
 ul.oe-arrow-list .oe-arrow-list-after {
     border-color: rgba(0,0,0,0);
-    border-left-color: #13394c;
+    border-left-color: #baaa48;
     border-right-width:0;
 }
 ul.oe-arrow-list li.oe-arrow-list-selected span {
