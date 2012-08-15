@@ -108,7 +108,7 @@ class res_partner(osv.osv):
                 'user_type': tipo_cuenta,
                 'reconcile': True,
                 'type': account_type,
-                'currency_id' : 2,
+                #'currency_id' : 2, 
             }, context)
         self.write(cr, uid, [partner_id], {
             'property_account_%s' % account_type : account_id,
