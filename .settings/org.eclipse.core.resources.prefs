@@ -3,3 +3,4 @@ encoding//openerp/addons/account/partner.py=utf-8
 encoding//openerp/addons/account_extension_uy/__init__.py=utf-8
 encoding//openerp/addons/account_extension_uy/__terp__.py=utf-8
 encoding//openerp/addons/account_extension_uy/partner.py=utf-8
+encoding//openerp/addons/nan_account_extension/partner.py=latin1
