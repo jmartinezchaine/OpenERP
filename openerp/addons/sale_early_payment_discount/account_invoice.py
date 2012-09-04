@@ -20,12 +20,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import time
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 """Inherit account_invoice to compute from button the early payment discount"""
 
 from osv import osv, fields
 from tools.translate import _
 import decimal_precision as dp
+
 
 def intersect(la, lb):
     """returns True for equal keys in two lists"""
@@ -65,12 +68,88 @@ class account_invoice(osv.osv):
                     res[invoice.id] = float(total_net_price) - (float(total_net_price) * (1 - (invoice.early_payment_discount or 0.0) / 100.0))
 
         return res
+    
+    def _get_monto_descuento(self, cr, uid, ids, descuento, context):
+        """Obtiene el monto con el descuento para la factura"""
+        res = {}
+
+        prod_early_payment_id = self.pool.get('product.product').search(cr, uid, [('default_code', '=', 'DPP')])
+        prod_early_payment_id = prod_early_payment_id and prod_early_payment_id[0] or False
+        
+        for invoice in self.browse(cr, uid, ids):
+            if not descuento:
+                res[invoice.id] = 0.0
+                continue
+            #searches if DPP is applied
+            found = False
+            for line in invoice.invoice_line:
+                if line.product_id and line.product_id.id == prod_early_payment_id:
+                    found = True
+                    break;
+
+            if found:
+                res[invoice.id] = 0.0
+            else:
+                total_net_price = 0.0
+                for invoice_line in invoice.invoice_line:
+                    total_net_price += invoice_line.price_subtotal
+
+                res[invoice.id] = float(total_net_price) - (float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0))
+
+        return res
 
 
     _columns = {
         'early_payment_discount': fields.float('E.P. disc.(%)', digits=(16, 2), help="Early payment discount"),
-        'early_discount_amount': fields.function(_get_early_discount_amount, method=True, string="E.P. amount", type='float', digits_compute=dp.get_precision('Account'), help="Early payment discount amount to apply.", readonly=True)
+        'early_discount_amount': fields.function(_get_early_discount_amount, method=True, string="E.P. amount", type='float', digits_compute=dp.get_precision('Account'), help="Early payment discount amount to apply.", readonly=True),
+        'leyenda_pp': fields.text('Leyenda pagos'),
     }
+    
+    def create(self, cr, uid, vals, context=None):
+        
+        # Creo lafactura
+        fact_id = super(account_invoice, self).create(cr, uid, vals, context)
+        
+        # Buscar el los PP asociados al cliente o los generales
+        early_discount_obj = self.pool.get('account.partner.payment.term.early.discount')
+        apt_obj = self.pool.get('account.payment.term')
+        
+        leyendas = {}
+        early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', False)])
+        if early_discs:            
+            for descuento in early_discs:
+                pp = early_discount_obj.browse(cr, uid, descuento, context=context)
+                pt = apt_obj.browse(cr, uid, pp.payment_term_id.id, context=context)
+                # @todo: Ver que si tiene mas de una linea en los terminos estos cambian las fechas.
+                # recorre las lineas del termino de pago, si tiene mas de una no se inlcuye porahora 
+                
+                # Calcular las fechas para los pagos
+                date_ref = datetime.now().strftime('%Y-%m-%d')
+                for linea_t in pt.line_ids:
+                    dias = linea_t.days
+                    fecha1 = datetime.strptime(date_ref, '%Y-%m-%d')
+                    dias_sumar = relativedelta(days=dias)
+                    next_date = fecha1 + dias_sumar
+                    if linea_t.days2 < 0:
+                        next_first_date = next_date + relativedelta(day=1, months=1) #Getting 1st of next month
+                        next_date = next_first_date + relativedelta(days=linea_t.days2)
+                    if linea_t.days2 > 0:
+                        next_date += relativedelta(day=linea_t.days2, months=1)
+                        
+                porc_desc = pp.early_payment_discount
+                # Calcular los montos por PP
+                monto_descuento = self._get_monto_descuento(cr, uid, [fact_id], pp, context)        
+        
+                # actualizar leyenda
+                una_leyenda = {'fecha': next_date, 'monto': str(monto_descuento)} 
+                leyendas.update(una_leyenda)
+            texto_a_mostrar = ''
+            for ly in leyendas: 
+                texto_a_mostrar += 'Abonando antes de %s %s  ' % (ly[0], ly[1])
+            vals.update({'leyenda_pp': texto_a_mostrar})
+        
+        
+        return fact_id
 
     def compute_early_payment_discount(self, cr, uid, invoice_line_ids, early_payment_percentage):
         """computes early payment price_unit"""
