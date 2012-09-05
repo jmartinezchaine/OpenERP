@@ -71,7 +71,7 @@ class account_invoice(osv.osv):
     
     def _get_monto_descuento(self, cr, uid, ids, descuento, context):
         """Obtiene el monto con el descuento para la factura"""
-        res = {}
+        res = 0
 
         prod_early_payment_id = self.pool.get('product.product').search(cr, uid, [('default_code', '=', 'DPP')])
         prod_early_payment_id = prod_early_payment_id and prod_early_payment_id[0] or False
@@ -94,9 +94,11 @@ class account_invoice(osv.osv):
                 for invoice_line in invoice.invoice_line:
                     total_net_price += invoice_line.price_subtotal
 
-                res[invoice.id] = float(total_net_price) - (float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0))
+                #res[invoice.id] = float(total_net_price) - (float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0))
+                #res = float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0)
+                res = float(invoice.amount_total) * (1 - (descuento.early_payment_discount or 0.0) / 100.0)
 
-        return res
+        return round(res, 0)
 
 
     _columns = {
@@ -109,13 +111,34 @@ class account_invoice(osv.osv):
         
         # Creo lafactura
         fact_id = super(account_invoice, self).create(cr, uid, vals, context)
+        #up_leyenda = self.calcular_pronto_pagos(cr, uid, vals, context)
+        self.write(cr, uid, [fact_id], up_leyenda)
         
+        return fact_id
+
+
+    def write(self, cr, uid, ids, vals, context=None):
+        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+        vals.update(up_leyenda)
+        return super(account_invoice, self).write(cr, uid, ids, vals, context)
+
+    def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):
         # Buscar el los PP asociados al cliente o los generales
         early_discount_obj = self.pool.get('account.partner.payment.term.early.discount')
         apt_obj = self.pool.get('account.payment.term')
         
-        leyendas = {}
+        leyendas = []
+        texto = ''
+        up_leyenda = ''
         early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', False)])
+        moneda = '$'
+        for invoice in self.browse(cr, uid, ids):
+            moneda = invoice.currency_id.symbol
+            if invoice.date_invoice:
+                date_ref = invoice.date_invoice
+            else:
+                date_ref = datetime.now().strftime('%Y-%m-%d')
+        
         if early_discs:            
             for descuento in early_discs:
                 pp = early_discount_obj.browse(cr, uid, descuento, context=context)
@@ -124,7 +147,7 @@ class account_invoice(osv.osv):
                 # recorre las lineas del termino de pago, si tiene mas de una no se inlcuye porahora 
                 
                 # Calcular las fechas para los pagos
-                date_ref = datetime.now().strftime('%Y-%m-%d')
+                
                 for linea_t in pt.line_ids:
                     dias = linea_t.days
                     fecha1 = datetime.strptime(date_ref, '%Y-%m-%d')
@@ -137,19 +160,17 @@ class account_invoice(osv.osv):
                         next_date += relativedelta(day=linea_t.days2, months=1)
                         
                 porc_desc = pp.early_payment_discount
-                # Calcular los montos por PP
-                monto_descuento = self._get_monto_descuento(cr, uid, [fact_id], pp, context)        
+                # Calcular los montos ponumber)resr PP
+                monto_descuento = self._get_monto_descuento(cr, uid, ids, pp, context)        
         
                 # actualizar leyenda
-                una_leyenda = {'fecha': next_date, 'monto': str(monto_descuento)} 
-                leyendas.update(una_leyenda)
-            texto_a_mostrar = ''
+                
+                leyendas.append(['fecha', next_date.strftime("%d/%m/%Y"), 'monto', moneda+ ' ' + str(monto_descuento)]) 
+                
             for ly in leyendas: 
-                texto_a_mostrar += 'Abonando antes de %s %s  ' % (ly[0], ly[1])
-            vals.update({'leyenda_pp': texto_a_mostrar})
-        
-        
-        return fact_id
+                texto += '%s %s | ' % (ly[1], ly[3])
+            up_leyenda = {'leyenda_pp': 'Abonando antes de: ' + texto}
+        return up_leyenda    
 
     def compute_early_payment_discount(self, cr, uid, invoice_line_ids, early_payment_percentage):
         """computes early payment price_unit"""
