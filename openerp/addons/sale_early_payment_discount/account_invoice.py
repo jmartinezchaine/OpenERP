@@ -112,7 +112,7 @@ class account_invoice(osv.osv):
         # Creo lafactura
         fact_id = super(account_invoice, self).create(cr, uid, vals, context)
         #up_leyenda = self.calcular_pronto_pagos(cr, uid, vals, context)
-        self.write(cr, uid, [fact_id], up_leyenda)
+        #self.write(cr, uid, [fact_id], up_leyenda)
         
         return fact_id
 
