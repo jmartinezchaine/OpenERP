@@ -25,7 +25,16 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+<<<<<<< HEAD
+
+# Archivo de Configuracion local
+install/openerp-server.conf
+=======
 /.project
 /.pydevproject
+<<<<<<< HEAD
+>>>>>>> 75a4164c34fdea4b4c2e6fbda38da0621a7a2b93
+=======
 /.settings
 /.settings/*
+>>>>>>> 83e4d42f9d1031be6c280668231741501837dc84

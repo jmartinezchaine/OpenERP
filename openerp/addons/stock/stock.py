@@ -2702,7 +2702,7 @@ class stock_inventory(osv.osv):
                     move_ids.append(self._inventory_line_hook(cr, uid, line, value))
             message = _("Inventory '%s' is done.") %(inv.name)
             self.log(cr, uid, inv.id, message)
-            self.write(cr, uid, [inv.id], {'state': 'confirm', 'move_ids': [(0, 0, move_ids)]})
+            self.write(cr, uid, [inv.id], {'state': 'confirm', 'move_ids': [(6, 0, move_ids)]})
             self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
         return True
 
