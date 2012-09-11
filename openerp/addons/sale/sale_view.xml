@@ -199,6 +199,7 @@
                                 <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute"/>
                                 <button name="%(action_view_sale_advance_payment_inv)d" string="Advance Invoice" type="action" icon="gtk-execute" states="draft,manual" groups="base.group_extended"/>
                             </group>
+                            <group  colspan="10" col="13"> <field name="leyenda_pp" readonly="1" nolabel="1" colspan="6" widget="char"> </field></group>
                             <group col="17" colspan="4">
                                 <field name="state" widget="statusbar" statusbar_visible="draft,progress,done" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
                                 <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice" icon="gtk-go-forward"/>

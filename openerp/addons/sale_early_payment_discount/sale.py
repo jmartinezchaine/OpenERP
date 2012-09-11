@@ -22,7 +22,9 @@
 ##############################################################################
 
 """Inherit sale_order to add early payment discount"""
-
+import time
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from osv import fields, osv
 import decimal_precision as dp
 
@@ -87,6 +89,7 @@ class sale_order(osv.osv):
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='epd'),
+        'leyenda_pp': fields.text('Leyenda pagos'),
     }
 
     def onchange_partner_id2(self, cr, uid, ids, part,
@@ -159,6 +162,106 @@ class sale_order(osv.osv):
         if current_sale.early_payment_discount:
             invoice_facade.write(cr, uid, invoice_id, {'early_payment_discount': current_sale.early_payment_discount})
         return invoice_id
+    
+    def button_dummy(self, cr, uid, ids, context=None):
+        vals = {}
+        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+        self.leyenda_pp = up_leyenda
+        return True
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+        vals.update(up_leyenda)
+        return super(sale_order, self).write(cr, uid, ids, vals, context)
+    
+    def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):
+        # Buscar el los PP asociados al cliente o los generales
+        early_discount_obj = self.pool.get('account.partner.payment.term.early.discount')
+        apt_obj = self.pool.get('account.payment.term')
+        
+        leyendas = []
+        texto = ''
+        up_leyenda = ''
+        
+        cliente_id = False
+        for order in self.browse(cr, uid, ids):
+            cliente_id = order.partner_id.id
+            
+        early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', cliente_id)])
+        if not early_discs:
+            early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', False)])
+            
+        moneda = '$'
+        for order in self.browse(cr, uid, ids):
+            moneda = order.pricelist_id.currency_id.symbol
+            if order.date_order:
+                date_ref = order.date_order
+            else:
+                date_ref = datetime.now().strftime('%Y-%m-%d')
+        
+        if early_discs:            
+            for descuento in early_discs:
+                pp = early_discount_obj.browse(cr, uid, descuento, context=context)
+                pt = apt_obj.browse(cr, uid, pp.payment_term_id.id, context=context)
+                # @todo: Ver que si tiene mas de una linea en los terminos estos cambian las fechas.
+                # recorre las lineas del termino de pago, si tiene mas de una no se inlcuye porahora 
+                
+                # Calcular las fechas para los pagos
+                
+                for linea_t in pt.line_ids:
+                    dias = linea_t.days
+                    fecha1 = datetime.strptime(date_ref, '%Y-%m-%d')
+                    dias_sumar = relativedelta(days=dias)
+                    next_date = fecha1 + dias_sumar
+                    if linea_t.days2 < 0:
+                        next_first_date = next_date + relativedelta(day=1, months=1) #Getting 1st of next month
+                        next_date = next_first_date + relativedelta(days=linea_t.days2)
+                    if linea_t.days2 > 0:
+                        next_date += relativedelta(day=linea_t.days2, months=1)
+                        
+                porc_desc = pp.early_payment_discount
+                # Calcular los montos ponumber)resr PP
+                monto_descuento = self._get_monto_descuento(cr, uid, ids, pp, context)        
+        
+                # actualizar leyenda
+                
+                leyendas.append(['fecha', next_date.strftime("%d/%m/%Y"), 'monto', moneda+ ' ' + str(monto_descuento)]) 
+                
+            for ly in leyendas: 
+                texto += '%s %s | ' % (ly[1], ly[3])
+            up_leyenda = {'leyenda_pp': 'Abonando antes de: ' + texto}
+        return up_leyenda
+    
+    def _get_monto_descuento(self, cr, uid, ids, descuento, context):
+        """Obtiene el monto con el descuento para la factura"""
+        res = 0
+
+        prod_early_payment_id = self.pool.get('product.product').search(cr, uid, [('default_code', '=', 'DPP')])
+        prod_early_payment_id = prod_early_payment_id and prod_early_payment_id[0] or False
+        
+        for order in self.browse(cr, uid, ids):
+            if not descuento:
+                res[order.id] = 0.0
+                continue
+            #searches if DPP is applied
+            found = False
+            for line in order.order_line:
+                if line.product_id and line.product_id.id == prod_early_payment_id:
+                    found = True
+                    break;
+
+            if found:
+                res[order.id] = 0.0
+            else:
+                total_net_price = 0.0
+                for order_line in order.order_line:
+                    total_net_price += order_line.price_subtotal
+
+                #res[invoice.id] = float(total_net_price) - (float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0))
+                #res = float(total_net_price) * (1 - (descuento.early_payment_discount or 0.0) / 100.0)
+                res = float(order.amount_total) * (1 - (descuento.early_payment_discount or 0.0) / 100.0)
+
+        return round(res, 0)
 
 
 sale_order()

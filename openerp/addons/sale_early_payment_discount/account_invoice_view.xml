@@ -14,7 +14,8 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Invoice']/group[@col='4']/label[@colspan='2']" position="replace">
-                    <button colspan="2" name="button_compute_early_payment_disc" states="draft" string="Apply early payment disc." type="object" groups="base.group_user" />
+                    <button colspan="2" name="button_compute_early_payment_disc" states="draft" string="Apply early payment disc." type="object" groups="base.group_erp_manager,base.group_user" />
+                	<field name="leyenda_pp" readonly="1" nolabel="1" colspan="6" widget="char"> </field>
                 </xpath>
             </field>
         </record>

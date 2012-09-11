@@ -130,7 +130,16 @@ class account_invoice(osv.osv):
         leyendas = []
         texto = ''
         up_leyenda = ''
-        early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', False)])
+        
+        cliente_id = False
+        for invoice in self.browse(cr, uid, ids):
+            cliente_id = invoice.partner_id.id
+            
+        early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', cliente_id)])
+        if not early_discs:
+            early_discs = early_discount_obj.search(cr, uid, [('partner_id', '=', False)])
+        
+        
         moneda = '$'
         for invoice in self.browse(cr, uid, ids):
             moneda = invoice.currency_id.symbol
@@ -166,9 +175,13 @@ class account_invoice(osv.osv):
                 # actualizar leyenda
                 
                 leyendas.append(['fecha', next_date.strftime("%d/%m/%Y"), 'monto', moneda+ ' ' + str(monto_descuento)]) 
-                
+            cont = 0     
             for ly in leyendas: 
-                texto += '%s %s | ' % (ly[1], ly[3])
+                cont = cont+1
+                if cont > 1:
+                    texto += '\t \t \t \t \t %s %s' % (ly[1], ly[3])
+                else:
+                    texto += '  %s %s \n' % (ly[1], ly[3])    
             up_leyenda = {'leyenda_pp': 'Abonando antes de: ' + texto}
         return up_leyenda    
 
