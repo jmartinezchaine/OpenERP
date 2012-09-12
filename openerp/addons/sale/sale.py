@@ -77,6 +77,7 @@ class sale_order(osv.osv):
                 'amount_untaxed': 0.0,
                 'amount_tax': 0.0,
                 'amount_total': 0.0,
+                'leyenda_pp': '',
             }
             val = val1 = 0.0
             cur = order.pricelist_id.currency_id
@@ -86,6 +87,8 @@ class sale_order(osv.osv):
             res[order.id]['amount_tax'] = cur_obj.round(cr, uid, cur, val)
             res[order.id]['amount_untaxed'] = cur_obj.round(cr, uid, cur, val1)
             res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
+            #res[order.id]['leyenda_pp'] = self.calcular_pronto_pagos(cr, uid, ids, arg, context)['leyenda_pp']
+            
         return res
 
     # This is False

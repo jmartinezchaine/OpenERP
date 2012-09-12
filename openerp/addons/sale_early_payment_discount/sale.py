@@ -56,6 +56,16 @@ class sale_order(osv.osv):
                 res[order.id]['total_early_discount'] = res[order.id]['early_payment_disc_untaxed'] - order.amount_untaxed
 
         return res
+    
+    def _pp_refresh(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for order in self.browse(cr, uid, ids, context=context):
+            res[order.id] = {
+                'leyenda_pp': '',
+            }
+            res[order.id]['leyenda_pp'] = str(self.calcular_pronto_pagos(cr, uid, ids, arg, context)['leyenda_pp'])
+            
+        return res
 
     def _get_order(self, cr, uid, ids, context={}):
         result = {}
@@ -89,7 +99,13 @@ class sale_order(osv.osv):
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='epd'),
-        'leyenda_pp': fields.text('Leyenda pagos'),
+        'leyenda_pp': fields.function(_pp_refresh, method=True, type = 'char', string='Leyenda pagos', help="Leyenda para pronto pagos.", 
+              store={
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['leyenda_pp'], 10),
+            },
+            multi='epd'),
+        #'leyenda_pp': fields.text('Leyenda pagos'),
+        #'miembros_list': fields.function(_get_miembros_del_proyecto, method=True, type='char', string='Miembros del Equipo', store=False),
     }
 
     def onchange_partner_id2(self, cr, uid, ids, part,
@@ -164,14 +180,18 @@ class sale_order(osv.osv):
         return invoice_id
     
     def button_dummy(self, cr, uid, ids, context=None):
-        vals = {}
-        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
-        self.leyenda_pp = up_leyenda
+        super(sale_order, self).button_dummy(cr, uid, ids, context)
+        #vals = {}
+        #res = {}
+        #up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)['leyenda_pp']
+        #self.leyenda_pp = up_leyenda
+        #cod = ids[0] 
+        #res[cod]['leyenda_pp'] = up_leyenda
         return True
     
     def write(self, cr, uid, ids, vals, context=None):
-        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
-        vals.update(up_leyenda)
+        #up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+        #vals.update(up_leyenda)
         return super(sale_order, self).write(cr, uid, ids, vals, context)
     
     def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-    <template pageSize="(595.0,862.0)" title="Test" author="Juan Andres Martinez Chaine" allowSplitting="20">
+    <template pageSize="(21cm,30.5cm)" title="Test" author="Juan Andres Martinez Chaine" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="15.0" y1="0.0" width="532" height="800"/>
+      <frame id="first" x1="0.0cm" y1="0.0" width="20.0cm" height="30.0cm"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -92,6 +92,29 @@
     <images/>
   </stylesheet>
   <story>
+	<blockTable colWidths="118.0,196.0,80.0,81.0,106.0" style="Table_Invoice_General_Header" rowHeights="0.8cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3"> </para>
+        </td>
+        <td>
+            <para style="P2"> </para>
+        </td>
+        <td>
+          <para style="P3"> </para>
+        </td>
+      </tr>
+    </blockTable>
     <para style="P3">[[ repeatIn(objects,'o') ]]</para>
     <para style="P3">[[ setLang(o.partner_id.lang) ]]</para>
     <blockTable colWidths="118.0,196.0,80.0,81.0,106.0" style="Table_Invoice_General_Header" rowHeights="0.8cm">
@@ -110,9 +133,7 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-          <para style="P3">
-            <font color="white"> </font>
-          </para>
+            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
         </td>
         <td>
           <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
@@ -168,7 +189,7 @@
           <para style="P3">[[ (o.partner_id and o.partner_id.x_rut) or '' ]]</para>
         </td>
         <td>
-          <para style="P3">[[ (o.partner_id.x_rut == '' and 'X') or '' ]]</para>
+          <para style="P3"></para>
         </td>
       </tr>
     </blockTable>
@@ -282,12 +303,16 @@
 		</tr>
 	</blockTable>
     </section>
-    <blockTable colWidths="448.0,129.0" style="Table10" rowHeights="0.5cm">
+    <blockTable colWidths="50.0,300.0,227.0" style="Table10" rowHeights="0.5cm">
       <tr>
         <td>
           <para style="P3">
             <font color="white"> </font>
           </para>
+        </td>
+		<td vAlign="top">
+          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+          <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
           <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
@@ -304,9 +329,19 @@
             <font color="white"> </font>
           </para>
         </td>
+		<td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
       </tr>
       <tr>
         <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
           <para style="P3">
             <font color="white"> </font>
           </para>
@@ -332,7 +367,7 @@
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="100.0,300.0,177.0" style="Tabla1" rowHeights="3.5cm">
+    <blockTable colWidths="50.0,300.0,227.0" style="Tabla1" rowHeights="3.3cm">
       <tr>
 		<td vAlign="top">
           <para style="P4">
@@ -340,8 +375,6 @@
     	  </para>
         </td>
         <td vAlign="top">
-          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
-          <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td vAlign="top">
           <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_total, digits=get_digits(dp='Account'))]]</para>
@@ -380,9 +413,7 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-          <para style="P3">
-            <font color="white"> </font>
-          </para>
+            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
         </td>
         <td>
           <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
@@ -438,7 +469,7 @@
           <para style="P3">[[ (o.partner_id and o.partner_id.x_rut) or '' ]]</para>
         </td>
         <td>
-          <para style="P3">[[ (o.partner_id.x_rut == '' and 'X') or '' ]]</para>
+          <para style="P3"></para>
         </td>
       </tr>
     </blockTable>
@@ -552,12 +583,16 @@
 		</tr>
 	</blockTable>
     </section>
-    <blockTable colWidths="448.0,129.0" style="Table10" rowHeights="0.5cm">
+    <blockTable colWidths="50.0,300.0,227.0" style="Table10" rowHeights="0.5cm">
       <tr>
         <td>
           <para style="P3">
             <font color="white"> </font>
           </para>
+        </td>
+		<td vAlign="top">
+          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+          <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
           <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
@@ -574,9 +609,19 @@
             <font color="white"> </font>
           </para>
         </td>
+		<td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
       </tr>
       <tr>
         <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
           <para style="P3">
             <font color="white"> </font>
           </para>
@@ -602,7 +647,7 @@
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="100.0,300.0,177.0" style="Tabla1" rowHeights="3.5cm">
+    <blockTable colWidths="50.0,300.0,227.0" style="Tabla1" rowHeights="0.8cm">
       <tr>
 		<td vAlign="top">
           <para style="P4">
@@ -610,8 +655,581 @@
     	  </para>
         </td>
         <td vAlign="top">
+        </td>
+        <td vAlign="top">
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_total, digits=get_digits(dp='Account'))]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P3"/>
+	
+	<nextPage/>
+	
+	<!-- Pagina siguiente con las 2 copias extras -->
+
+		<blockTable colWidths="118.0,196.0,80.0,81.0,106.0" style="Table_Invoice_General_Header" rowHeights="0.8cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3"> </para>
+        </td>
+        <td>
+            <para style="P2"> </para>
+        </td>
+        <td>
+          <para style="P3"> </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P3">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P3">[[ setLang(o.partner_id.lang) ]]</para>
+    <blockTable colWidths="118.0,196.0,80.0,81.0,106.0" style="Table_Invoice_General_Header" rowHeights="0.8cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
+        </td>
+        <td>
+            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="142.0,78.0,93.0,96.0,116.0,48.0" style="Table_General_Detail_Content" rowHeights="0.6cm">
+      <tr>
+        <td>
+          <para style="P4">[[ (o.payment_term and o.payment_term.note and format(o.payment_term and o.payment_term.note)) or removeParentNode('para') ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.partner_id and o.partner_id.title and o.partner_id.title.ref) or '' ]] [[ (o.partner_id and o.partner_id.x_codigo) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.partner_id and o.partner_id.x_rut) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3"></para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="50.0,221.0,181.0,34.0,47.0" style="Table7" rowHeights="0.6cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[ (o.partner_id and o.partner_id.title and o.partner_id.title.name) or '' ]] [[ (o.partner_id and o.partner_id.name) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[ (o.address_invoice_id and o.address_invoice_id.street) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.address_invoice_id and o.address_invoice_id.city) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+
+    </blockTable>
+    <section>
+	<blockTable  rowHeights="5.5cm" style="Table8">
+		<tr>
+          <td>
+			
+      <blockTable colWidths="50.0,220.0,50.0,75.0,50.0,129.0" style="Table8" rowHeights="0.5cm">
+        <tr>
+          <td>
+			<para style="P3">[[ repeatIn(o.invoice_line,'l') ]]</para>
+            <para style="P3">[[ l.product_id.default_code ]]</para>
+          </td>
+          <td>
+            <para style="P4">[[ l.name ]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.quantity, digits=0)]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.price_unit) ]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.discount, digits=get_digits(dp='Account')) ]] </para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.price_subtotal, digits=get_digits(dp='Account')) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+		</td>
+		</tr>
+	</blockTable>
+    </section>
+    <blockTable colWidths="50.0,300.0,227.0" style="Table10" rowHeights="0.5cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td vAlign="top">
           <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
           <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
+        </td>
+        <td>
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P12">
+      <font color="white"> </font>
+    </para>
+    <section>
+      <para style="P3">[[ repeatIn(o.tax_line,'t') ]]</para>
+      <blockTable colWidths="448.0,129.0" style="Table2" rowHeights="0.5cm">
+        <tr>
+          <td>
+            <para style="P3"/>
+          </td>
+          <td>
+            <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(t.amount, digits=get_digits(dp='Account')) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
+    <blockTable colWidths="50.0,300.0,227.0" style="Tabla1" rowHeights="3.3cm">
+      <tr>
+		<td vAlign="top">
+          <para style="P4">
+      		<font color="white"> </font>
+    	  </para>
+        </td>
+        <td vAlign="top">
+        </td>
+        <td vAlign="top">
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_total, digits=get_digits(dp='Account'))]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P3"/>
+
+
+	<!-- Repeticion de la factura-->	
+	<blockTable colWidths="448.0,129.0" style="Tabla1" rowHeights="3.5">
+      <tr>
+        <td vAlign="top">
+          <para style="P4"> <font color="white"> </font></para>
+        </td>
+        <td>
+          <para style="P3"> <font color="white"> </font></para>
+        </td>
+      </tr>
+    </blockTable>
+	    <para style="P3">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P3">[[ setLang(o.partner_id.lang) ]]</para>
+    <blockTable colWidths="118.0,196.0,80.0,81.0,106.0" style="Table_Invoice_General_Header" rowHeights="0.8cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
+        </td>
+        <td>
+            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="142.0,78.0,93.0,96.0,116.0,48.0" style="Table_General_Detail_Content" rowHeights="0.6cm">
+      <tr>
+        <td>
+          <para style="P4">[[ (o.payment_term and o.payment_term.note and format(o.payment_term and o.payment_term.note)) or removeParentNode('para') ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.partner_id and o.partner_id.title and o.partner_id.title.ref) or '' ]] [[ (o.partner_id and o.partner_id.x_codigo) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.partner_id and o.partner_id.x_rut) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3"></para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="50.0,221.0,181.0,34.0,47.0" style="Table7" rowHeights="0.6cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[ (o.partner_id and o.partner_id.title and o.partner_id.title.name) or '' ]] [[ (o.partner_id and o.partner_id.name) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[ (o.address_invoice_id and o.address_invoice_id.street) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ (o.address_invoice_id and o.address_invoice_id.city) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+
+    </blockTable>
+    <section>
+	<blockTable  rowHeights="5.5cm" style="Table8">
+		<tr>
+          <td>
+			
+      <blockTable colWidths="50.0,220.0,50.0,75.0,50.0,129.0" style="Table8" rowHeights="0.5cm">
+        <tr>
+          <td>
+			<para style="P3">[[ repeatIn(o.invoice_line,'l') ]]</para>
+            <para style="P3">[[ l.product_id.default_code ]]</para>
+          </td>
+          <td>
+            <para style="P4">[[ l.name ]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.quantity, digits=0)]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.price_unit) ]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.discount, digits=get_digits(dp='Account')) ]] </para>
+          </td>
+          <td>
+            <para style="P3">[[ formatLang(l.price_subtotal, digits=get_digits(dp='Account')) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+		</td>
+		</tr>
+	</blockTable>
+    </section>
+    <blockTable colWidths="50.0,300.0,227.0" style="Table10" rowHeights="0.5cm">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td vAlign="top">
+          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+          <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
+        </td>
+        <td>
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+		<td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P12">
+      <font color="white"> </font>
+    </para>
+    <section>
+      <para style="P3">[[ repeatIn(o.tax_line,'t') ]]</para>
+      <blockTable colWidths="448.0,129.0" style="Table2" rowHeights="0.5cm">
+        <tr>
+          <td>
+            <para style="P3"/>
+          </td>
+          <td>
+            <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(t.amount, digits=get_digits(dp='Account')) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
+    <blockTable colWidths="50.0,300.0,227.0" style="Tabla1" rowHeights="0.8cm">
+      <tr>
+		<td vAlign="top">
+          <para style="P4">
+      		<font color="white"> </font>
+    	  </para>
+        </td>
+        <td vAlign="top">
         </td>
         <td vAlign="top">
           <para style="P3">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_total, digits=get_digits(dp='Account'))]]</para>
