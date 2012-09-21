@@ -99,12 +99,12 @@ class sale_order(osv.osv):
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='epd'),
-        'leyenda_pp': fields.function(_pp_refresh, method=True, type = 'char', string='Leyenda pagos', help="Leyenda para pronto pagos.", 
-              store={
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['leyenda_pp'], 10),
-            },
-            multi='epd'),
-        #'leyenda_pp': fields.text('Leyenda pagos'),
+        #'leyenda_pp': fields.function(_pp_refresh, method=True, type = 'char', string='Leyenda pagos', help="Leyenda para pronto pagos.", 
+        #      store={
+        #        'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['leyenda_pp'], 10),
+        #    },
+        #    multi='epd'),
+        'leyenda_pp': fields.text('Leyenda pagos'),
         #'miembros_list': fields.function(_get_miembros_del_proyecto, method=True, type='char', string='Miembros del Equipo', store=False),
     }
 
@@ -190,8 +190,8 @@ class sale_order(osv.osv):
         return True
     
     def write(self, cr, uid, ids, vals, context=None):
-        #up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
-        #vals.update(up_leyenda)
+        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+        vals.update(up_leyenda)
         return super(sale_order, self).write(cr, uid, ids, vals, context)
     
     def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):
