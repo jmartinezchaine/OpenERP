@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturas-cliente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;invoice_ids&apos;]"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Total-amount_total" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Total-amount_total]]></fieldDescription>
+	</field>
+	<field name="Fecha_factura-date_invoice" class="java.util.Date">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Fecha_factura-date_invoice]]></fieldDescription>
+	</field>
+	<field name="Fecha_vencimiento-date_due" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Fecha_vencimiento-date_due]]></fieldDescription>
+	</field>
+	<field name="Leyenda_pagos-leyenda_pp" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Leyenda_pagos-leyenda_pp]]></fieldDescription>
+	</field>
+	<field name="Numero-number" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Numero-number]]></fieldDescription>
+	</field>
+	<field name="Estado-state" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Estado-state]]></fieldDescription>
+	</field>
+	<field name="Saldo_pendiente-residual" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Saldo_pendiente-residual]]></fieldDescription>
+	</field>
+	<field name="Saldo_pendiente-balance" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Pagos-payment_ids/Saldo_pendiente-balance]]></fieldDescription>
+	</field>
+	<variable name="Importe" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="100" height="15" forecolor="#736343"/>
+				<textElement/>
+				<text><![CDATA[Fact.]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="100" y="0" width="100" height="15" forecolor="#736343"/>
+				<textElement/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="200" y="0" width="100" height="15" forecolor="#736343"/>
+				<textElement/>
+				<text><![CDATA[Imoprte]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Total-amount_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Fecha_factura-date_invoice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Numero-number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="702" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Estado-state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="2" width="402" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Leyenda_pagos-leyenda_pp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
