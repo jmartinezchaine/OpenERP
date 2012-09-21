@@ -78,7 +78,7 @@ class account_invoice(osv.osv):
         
         for invoice in self.browse(cr, uid, ids):
             if not descuento:
-                res[invoice.id] = 0.0
+                res = 0.0
                 continue
             #searches if DPP is applied
             found = False
@@ -88,7 +88,7 @@ class account_invoice(osv.osv):
                     break;
 
             if found:
-                res[invoice.id] = 0.0
+                res = 0.0
             else:
                 total_net_price = 0.0
                 for invoice_line in invoice.invoice_line:

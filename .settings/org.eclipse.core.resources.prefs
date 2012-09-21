@@ -22,3 +22,4 @@ encoding//openerp/addons/stock/stock.py=utf-8
 encoding//openerp/osv/fields.py=utf-8
 encoding//openerp/osv/orm.py=utf-8
 encoding//openerp/osv/osv.py=utf-8
+encoding//openerp/sql_db.py=utf-8

@@ -133,10 +133,12 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+			<para style="P2">Remito [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]]</para>
+			<para style="P2">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[format(o.payment_term.x_tipo_factura) ]]</para>
         </td>
         <td>
-          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+			<para style="P3">[[ (o.type=='out_refund' or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+          	<para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
         </td>
       </tr>
       <tr>
@@ -311,7 +313,7 @@
           </para>
         </td>
 		<td vAlign="top">
-          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+		  <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ format(o.leyenda_pp) ]]</para>		  	
           <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
@@ -413,10 +415,11 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+            <para style="P2">Remito [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]]</para>
+			<para style="P2">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[format(o.payment_term.x_tipo_factura) ]]</para>
         </td>
         <td>
-          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+           <para style="P3">[[ o.number ]]</para>
         </td>
       </tr>
       <tr>
@@ -591,7 +594,7 @@
           </para>
         </td>
 		<td vAlign="top">
-          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+		  <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ format(o.leyenda_pp) ]]</para>          
           <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
@@ -708,10 +711,11 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+            <para style="P2">Remito [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]]</para>
+			<para style="P2">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[format(o.payment_term.x_tipo_factura) ]]</para>
         </td>
         <td>
-          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+           <para style="P3">[[ o.number ]]</para>
         </td>
       </tr>
       <tr>
@@ -886,7 +890,7 @@
           </para>
         </td>
 		<td vAlign="top">
-          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ format(o.leyenda_pp) ]]</para>
           <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
@@ -988,10 +992,11 @@
           <para style="P3">[[ formatLang(o.date_invoice,date=True) ]]</para>
         </td>
         <td>
-            <para style="P2">[[ (o.payment_term and o.payment_term.x_tipo_factura and format(o.payment_term and o.payment_term.x_tipo_factura)) or removeParentNode('para') ]]</para>
+            <para style="P2">Remito [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]]</para>
+			<para style="P2">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[format(o.payment_term.x_tipo_factura) ]]</para>
         </td>
         <td>
-          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+           <para style="P3">[[ o.number ]]</para>
         </td>
       </tr>
       <tr>
@@ -1166,7 +1171,7 @@
           </para>
         </td>
 		<td vAlign="top">
-          <para style="P3">[[ (o.leyenda_pp and format(o.leyenda_pp)) ]]</para>
+          <para style="P3">[[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ format(o.leyenda_pp) ]]</para>
           <para style="P3">[[ (o.comment and format(o.comment )) ]] </para>
         </td>
         <td>
