@@ -191,10 +191,10 @@
           <para style="terp_tblheader_General_Centre">[[ o.state &lt;&gt; 'draft' and removeParentNode('para') ]] Quotation Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Our Salesman </para>
+          <para style="terp_tblheader_General_Centre">Vendedor </para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Payment Terms</para>
+          <para style="terp_tblheader_General_Centre">Plazo de pago</para>
         </td>
       </tr>
     </blockTable>
@@ -223,7 +223,7 @@
           <para style="terp_tblheader_Details">Description</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Centre">VAT</para>
+          <para style="terp_tblheader_Details_Centre">IVA</para>
         </td>
         <td>
           <para style="terp_tblheader_Details_Centre">Quantity</para>
@@ -389,6 +389,7 @@
       <tr>
         <td>
           <para style="terp_default_9">[[ format(o.note or '') ]]</para>
+          <para style="terp_default_9">[[ format(o.leyenda_pp or '')]]</para>
         </td>
       </tr>
       <tr>

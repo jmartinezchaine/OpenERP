@@ -207,10 +207,10 @@
           <para style="terp_tblheader_General_Centre">[[ o.state &lt;&gt; 'draft' and removeParentNode('para') ]] Quotation Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Salesman</para>
+          <para style="terp_tblheader_General_Centre">Vendedor</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Payment Term</para>
+          <para style="terp_tblheader_General_Centre">Plazo de pago</para>
         </td>
       </tr>
     </blockTable>
@@ -239,7 +239,7 @@
           <para style="terp_tblheader_Details">Description</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Centre">VAT</para>
+          <para style="terp_tblheader_Details_Centre">IVA</para>
         </td>
         <td>
           <para style="terp_tblheader_Details_Right">Quantity</para>
@@ -266,7 +266,7 @@
             <para style="terp_default_Centre_9">[[ ', '.join(map(lambda x: x.name, line.tax_id)) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty) ]] [[ line.product_uos and line.product_uos.name or line.product_uom.name ]]</para>
+            <para style="terp_default_Right_9">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty) ]] </para>
           </td>
           <td>
             <para style="terp_default_Right_9">[[ formatLang(line.price_unit ) ]]</para>
@@ -358,7 +358,8 @@
     <blockTable colWidths="533.0" style="Table7">
       <tr>
         <td>
-          <para style="terp_default_9">[[ format(o.leyenda_pp) ]]</para>
+          <para style="terp_default_9">Hola</para>
+          <para style="terp_default_9">[[ o.leyenda_pp ]]</para>
           <para style="terp_default_9">[[ format(o.payment_term and o.payment_term.note or (o.partner_id.property_payment_term and o.partner_id.property_payment_term.note or '')) ]]</para>
         </td>
       </tr>
