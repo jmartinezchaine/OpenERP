@@ -241,21 +241,29 @@ class account_invoice(osv.osv):
 
             for early_payment_line in group_account_line:
                 for account_id in group_account_line[early_payment_line]:
+                    if invoice.type =='out_refund':
+                        precio_unit = self.compute_early_payment_discount(cr, uid, group_account_line[early_payment_line][account_id], invoice.early_payment_discount)
+                    else:
+                        precio_unit = 0.0 - (self.compute_early_payment_discount(cr, uid, group_account_line[early_payment_line][account_id], invoice.early_payment_discount))
                     self.pool.get('account.invoice.line').create(cr, uid, {
                         #'name': len(group_account_line) > 1 and _("Early payment disc. (%s)") % self.pool.get('account.tax').browse(cr, uid, int(early_payment_line)).name or _("Early payment disc. ") + str(invoice.early_payment_discount) + "%",
-                        'name': _("Early payment discount") + " " + str(invoice.early_payment_discount) + "%",
+                        'name': _("Descuento pronto pago") + " " + str(invoice.early_payment_discount) + "%",
                         'invoice_id': id,
                         'product_id': prod_early_payment.id,
                         'account_id': int(account_id),
-                        'price_unit': 0.0 - (self.compute_early_payment_discount(cr, uid, group_account_line[early_payment_line][account_id], invoice.early_payment_discount)),
+                        'price_unit': precio_unit,
                         'quantity': 1,
                         'invoice_line_tax_id': [(6, 0, [int(x) for x in early_payment_line.split(',')])]
                         })
 
 
             if inv_lines_out_vat:
+                if invoice.type =='out_refund':
+                    precio_unit = self.compute_early_payment_discount(cr, uid, inv_lines_out_vat, invoice.early_payment_discount)
+                else:
+                    precio_unit = 0.0 - (self.compute_early_payment_discount(cr, uid, inv_lines_out_vat, invoice.early_payment_discount))
                 self.pool.get('account.invoice.line').create(cr, uid, {
-                        'name': _("Early payment discount") + " " + str(invoice.early_payment_discount) + "%",
+                        'name': _("Descuento pronto pago") + " " + str(invoice.early_payment_discount) + "%",
                         'invoice_id': id,
                         'product_id': prod_early_payment.id,
                         'account_id': prod_early_payment.categ_id and prod_early_payment.categ_id.property_account_sale_early_payment_disc.id or prod_early_payment.property_stock_account_output.id,

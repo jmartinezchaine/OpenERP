@@ -311,7 +311,7 @@
         </ul>
       </form>
       <div class="footer">
-        <a href="#" id="oe-db-config">Manage Databases</a>
+        <!--  a href="#" id="oe-db-config">Manage Databases</a-->
         <a href="http://www.openerp.com">Powered by <span class="openerp">OpenERP</span></a>
       	<div style="center">
         <span>Una implementación de: </span>
