@@ -1,7 +1,7 @@
-29   [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
-	Source text : $F{Saldo_pendiente-balance} < 0.0 ? -$F{Saldo_pendiente-balance} : $F{Saldo_pendiente-balance}
-org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
-	Source text : $F{Saldo_pendiente-balance} < 0.0 ? -$F{Saldo_pendiente-balance} : $F{Saldo_pendiente-balance}
+5    [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Report design not valid : 
+	 1. Warning : Element bottom reaches outside band area : y=66 height=19 band-height=84
+org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Report design not valid : 
+	 1. Warning : Element bottom reaches outside band area : y=66 height=19 band-height=84
 	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:129)
 	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
 	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
@@ -9,18 +9,64 @@ org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method exec
 	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
 	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
 	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
-Caused by: net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating expression : 
-	Source text : $F{Saldo_pendiente-balance} < 0.0 ? -$F{Saldo_pendiente-balance} : $F{Saldo_pendiente-balance}
-	at net.sf.jasperreports.engine.fill.JREvaluator.evaluateEstimated(JREvaluator.java:259)
-	at net.sf.jasperreports.engine.fill.JRCalculator.evaluateEstimated(JRCalculator.java:580)
-	at net.sf.jasperreports.engine.fill.JRCalculator.estimateVariables(JRCalculator.java:179)
-	at net.sf.jasperreports.engine.fill.JRFillDataset.next(JRFillDataset.java:787)
-	at net.sf.jasperreports.engine.fill.JRFillDatasetRun.iterate(JRFillDatasetRun.java:168)
-	at net.sf.jasperreports.engine.fill.SortFillDatasetRun.sort(DatasetSortUtil.java:332)
-	at net.sf.jasperreports.engine.fill.DatasetSortUtil.getSortedDataSource(DatasetSortUtil.java:110)
-	at net.sf.jasperreports.engine.fill.JRFillDataset.initDatasource(JRFillDataset.java:611)
-	at net.sf.jasperreports.engine.fill.JRBaseFiller.setParameters(JRBaseFiller.java:1281)
-	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:901)
+Caused by: net.sf.jasperreports.engine.design.JRValidationException: Report design not valid : 
+	 1. Warning : Element bottom reaches outside band area : y=66 height=19 band-height=84
+	at net.sf.jasperreports.engine.design.JRAbstractCompiler.verifyDesign(JRAbstractCompiler.java:258)
+	at net.sf.jasperreports.engine.design.JRAbstractCompiler.compileReport(JRAbstractCompiler.java:140)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReport(JasperCompileManager.java:215)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReportToFile(JasperCompileManager.java:131)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReportToFile(JasperCompileManager.java:113)
+	at com.nantic.jasperreports.JasperServer.compile(JasperServer.java:97)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:136)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	... 6 more
+Caused by:
+net.sf.jasperreports.engine.design.JRValidationException: Report design not valid : 
+	 1. Warning : Element bottom reaches outside band area : y=66 height=19 band-height=84
+	at net.sf.jasperreports.engine.design.JRAbstractCompiler.verifyDesign(JRAbstractCompiler.java:258)
+	at net.sf.jasperreports.engine.design.JRAbstractCompiler.compileReport(JRAbstractCompiler.java:140)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReport(JasperCompileManager.java:215)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReportToFile(JasperCompileManager.java:131)
+	at net.sf.jasperreports.engine.JasperCompileManager.compileReportToFile(JasperCompileManager.java:113)
+	at com.nantic.jasperreports.JasperServer.compile(JasperServer.java:97)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:136)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+1696150 [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Byte data not found at location : /home/jam/soft/src/jasper-openerp/in_factura841x595.jpg
+org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Byte data not found at location : /home/jam/soft/src/jasper-openerp/in_factura841x595.jpg
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:129)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: net.sf.jasperreports.engine.JRException: Byte data not found at location : /home/jam/soft/src/jasper-openerp/in_factura841x595.jpg
+	at net.sf.jasperreports.engine.util.JRLoader.loadBytesFromLocation(JRLoader.java:563)
+	at net.sf.jasperreports.engine.JRImageRenderer.getInstance(JRImageRenderer.java:217)
+	at net.sf.jasperreports.engine.fill.JRFillImage.evaluateImage(JRFillImage.java:1057)
+	at net.sf.jasperreports.engine.fill.JRFillImage.evaluate(JRFillImage.java:1004)
+	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
+	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillBackground(JRVerticalFiller.java:1807)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:260)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
 	at net.sf.jasperreports.engine.fill.JRFiller.fillReport(JRFiller.java:84)
 	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
@@ -32,28 +78,18 @@ Caused by: net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error eva
 	at java.lang.reflect.Method.invoke(Method.java:597)
 	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
 	... 6 more
-Caused by: java.lang.ClassCastException: java.math.BigDecimal cannot be cast to java.lang.String
-	at java.lang.String.compareTo(String.java:92)
-	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.compareToWithEqualityCheck(DefaultTypeTransformation.java:566)
-	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.compareTo(DefaultTypeTransformation.java:521)
-	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.compareTo(ScriptBytecodeAdapter.java:692)
-	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.compareLessThan(ScriptBytecodeAdapter.java:701)
-	at forecast_1348058674557_396783.evaluateEstimated(calculator_forecast_1348058674557_396783:1017)
-	at net.sf.jasperreports.engine.fill.JREvaluator.evaluateEstimated(JREvaluator.java:246)
-	... 25 more
 Caused by:
-net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating expression : 
-	Source text : $F{Saldo_pendiente-balance} < 0.0 ? -$F{Saldo_pendiente-balance} : $F{Saldo_pendiente-balance}
-	at net.sf.jasperreports.engine.fill.JREvaluator.evaluateEstimated(JREvaluator.java:259)
-	at net.sf.jasperreports.engine.fill.JRCalculator.evaluateEstimated(JRCalculator.java:580)
-	at net.sf.jasperreports.engine.fill.JRCalculator.estimateVariables(JRCalculator.java:179)
-	at net.sf.jasperreports.engine.fill.JRFillDataset.next(JRFillDataset.java:787)
-	at net.sf.jasperreports.engine.fill.JRFillDatasetRun.iterate(JRFillDatasetRun.java:168)
-	at net.sf.jasperreports.engine.fill.SortFillDatasetRun.sort(DatasetSortUtil.java:332)
-	at net.sf.jasperreports.engine.fill.DatasetSortUtil.getSortedDataSource(DatasetSortUtil.java:110)
-	at net.sf.jasperreports.engine.fill.JRFillDataset.initDatasource(JRFillDataset.java:611)
-	at net.sf.jasperreports.engine.fill.JRBaseFiller.setParameters(JRBaseFiller.java:1281)
-	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:901)
+net.sf.jasperreports.engine.JRException: Byte data not found at location : /home/jam/soft/src/jasper-openerp/in_factura841x595.jpg
+	at net.sf.jasperreports.engine.util.JRLoader.loadBytesFromLocation(JRLoader.java:563)
+	at net.sf.jasperreports.engine.JRImageRenderer.getInstance(JRImageRenderer.java:217)
+	at net.sf.jasperreports.engine.fill.JRFillImage.evaluateImage(JRFillImage.java:1057)
+	at net.sf.jasperreports.engine.fill.JRFillImage.evaluate(JRFillImage.java:1004)
+	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
+	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillBackground(JRVerticalFiller.java:1807)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:260)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
 	at net.sf.jasperreports.engine.fill.JRFiller.fillReport(JRFiller.java:84)
 	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
@@ -70,16 +106,94 @@ net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating exp
 	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
 	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
 	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
-Caused by: java.lang.ClassCastException: java.math.BigDecimal cannot be cast to java.lang.String
-	at java.lang.String.compareTo(String.java:92)
-	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.compareToWithEqualityCheck(DefaultTypeTransformation.java:566)
-	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.compareTo(DefaultTypeTransformation.java:521)
-	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.compareTo(ScriptBytecodeAdapter.java:692)
-	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.compareLessThan(ScriptBytecodeAdapter.java:701)
-	at forecast_1348058674557_396783.evaluateEstimated(calculator_forecast_1348058674557_396783:1017)
-	at net.sf.jasperreports.engine.fill.JREvaluator.evaluateEstimated(JREvaluator.java:246)
-	... 25 more
-11685555 [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
+2301418 [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
+	Source text : $F{Calle-street} $F{Ciudad-city} $F{Nombre_del_pais-name}
+org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
+	Source text : $F{Calle-street} $F{Ciudad-city} $F{Nombre_del_pais-name}
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:129)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating expression : 
+	Source text : $F{Calle-street} $F{Ciudad-city} $F{Nombre_del_pais-name}
+	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:195)
+	at net.sf.jasperreports.engine.fill.JRCalculator.evaluate(JRCalculator.java:589)
+	at net.sf.jasperreports.engine.fill.JRCalculator.evaluate(JRCalculator.java:557)
+	at net.sf.jasperreports.engine.fill.JRFillElement.evaluateExpression(JRFillElement.java:929)
+	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluateText(JRFillTextField.java:383)
+	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluate(JRFillTextField.java:368)
+	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
+	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillTitle(JRVerticalFiller.java:326)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:262)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
+	at net.sf.jasperreports.engine.fill.JRFiller.fillReport(JRFiller.java:84)
+	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:211)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	... 6 more
+Caused by: groovy.lang.MissingMethodException: No signature of method: java.lang.String.call() is applicable for argument types: (java.lang.String) values: [Montevideo]
+Possible solutions: wait(), any(), wait(long), split(java.lang.String), each(groovy.lang.Closure), find(java.lang.String)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:54)
+	at org.codehaus.groovy.runtime.callsite.PojoMetaClassSite.call(PojoMetaClassSite.java:46)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:40)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:124)
+	at facturas_1348509771015_158696.evaluate(calculator_facturas_1348509771015_158696:715)
+	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:182)
+	... 27 more
+Caused by:
+net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating expression : 
+	Source text : $F{Calle-street} $F{Ciudad-city} $F{Nombre_del_pais-name}
+	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:195)
+	at net.sf.jasperreports.engine.fill.JRCalculator.evaluate(JRCalculator.java:589)
+	at net.sf.jasperreports.engine.fill.JRCalculator.evaluate(JRCalculator.java:557)
+	at net.sf.jasperreports.engine.fill.JRFillElement.evaluateExpression(JRFillElement.java:929)
+	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluateText(JRFillTextField.java:383)
+	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluate(JRFillTextField.java:368)
+	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
+	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillTitle(JRVerticalFiller.java:326)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:262)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
+	at net.sf.jasperreports.engine.fill.JRFiller.fillReport(JRFiller.java:84)
+	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:211)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: groovy.lang.MissingMethodException: No signature of method: java.lang.String.call() is applicable for argument types: (java.lang.String) values: [Montevideo]
+Possible solutions: wait(), any(), wait(long), split(java.lang.String), each(groovy.lang.Closure), find(java.lang.String)
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:54)
+	at org.codehaus.groovy.runtime.callsite.PojoMetaClassSite.call(PojoMetaClassSite.java:46)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:40)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:124)
+	at facturas_1348509771015_158696.evaluate(calculator_facturas_1348509771015_158696:715)
+	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:182)
+	... 27 more
+3052604 [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
 	Source text : $F{Fecha_factura-date_invoice}
 org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Error evaluating expression : 
 	Source text : $F{Fecha_factura-date_invoice}
@@ -100,9 +214,8 @@ Caused by: net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error eva
 	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluate(JRFillTextField.java:368)
 	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
 	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillColumnBand(JRVerticalFiller.java:2036)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillDetail(JRVerticalFiller.java:760)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:270)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillTitle(JRVerticalFiller.java:326)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:262)
 	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
@@ -110,15 +223,16 @@ Caused by: net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error eva
 	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
 	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:211)
 	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
-	at sun.reflect.GeneratedMethodAccessor63.invoke(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
 	at java.lang.reflect.Method.invoke(Method.java:597)
 	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
 	... 6 more
-Caused by: org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object '2012-09-19 00:00:00' with class 'java.lang.String' to class 'java.util.Date'
+Caused by: org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object '2012-09-11 00:00:00' with class 'java.lang.String' to class 'java.util.Date'
 	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.castToType(DefaultTypeTransformation.java:327)
 	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.castToType(ScriptBytecodeAdapter.java:602)
-	at facturas45cliente_1348070360509_929057.evaluate(calculator_facturas45cliente_1348070360509_929057:727)
+	at facturas_1348510522059_27474.evaluate(calculator_facturas_1348510522059_27474:707)
 	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:182)
 	... 27 more
 Caused by:
@@ -132,9 +246,8 @@ net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating exp
 	at net.sf.jasperreports.engine.fill.JRFillTextField.evaluate(JRFillTextField.java:368)
 	at net.sf.jasperreports.engine.fill.JRFillElementContainer.evaluate(JRFillElementContainer.java:258)
 	at net.sf.jasperreports.engine.fill.JRFillBand.evaluate(JRFillBand.java:499)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillColumnBand(JRVerticalFiller.java:2036)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillDetail(JRVerticalFiller.java:760)
-	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:270)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillTitle(JRVerticalFiller.java:326)
+	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReportStart(JRVerticalFiller.java:262)
 	at net.sf.jasperreports.engine.fill.JRVerticalFiller.fillReport(JRVerticalFiller.java:128)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:946)
 	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:864)
@@ -142,7 +255,8 @@ net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating exp
 	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:624)
 	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:211)
 	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:120)
-	at sun.reflect.GeneratedMethodAccessor63.invoke(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
 	at java.lang.reflect.Method.invoke(Method.java:597)
 	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
@@ -152,9 +266,9 @@ net.sf.jasperreports.engine.fill.JRExpressionEvalException: Error evaluating exp
 	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
 	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
 	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
-Caused by: org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object '2012-09-19 00:00:00' with class 'java.lang.String' to class 'java.util.Date'
+Caused by: org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object '2012-09-11 00:00:00' with class 'java.lang.String' to class 'java.util.Date'
 	at org.codehaus.groovy.runtime.typehandling.DefaultTypeTransformation.castToType(DefaultTypeTransformation.java:327)
 	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.castToType(ScriptBytecodeAdapter.java:602)
-	at facturas45cliente_1348070360509_929057.evaluate(calculator_facturas45cliente_1348070360509_929057:727)
+	at facturas_1348510522059_27474.evaluate(calculator_facturas_1348510522059_27474:707)
 	at net.sf.jasperreports.engine.fill.JREvaluator.evaluate(JREvaluator.java:182)
 	... 27 more
