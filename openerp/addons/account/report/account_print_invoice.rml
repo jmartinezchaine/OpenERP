@@ -2,7 +2,7 @@
 <document filename="test.pdf">
     <template pageSize="(21.0cm, 29.7cm)" title="Test" author="Juan Andres Martinez Chaine" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="0.0" y1="1.0cm" width="19.0cm" height="27.5cm"/>
+      <frame id="first" x1="0.0" y1="1.0cm" width="19.0cm" height="27.0cm"/>
     </pageTemplate>
   </template>
   <stylesheet>
