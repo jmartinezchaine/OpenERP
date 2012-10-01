@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Facturas_Vendedor_Ciudad_Cliente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[select rp.name, ai.date_invoice, ai.number, ai.amount_total, ai.residual, ai.leyenda_pp, ru.id usuid, ru.name usuname, rc.symbol, ra.city from account_invoice as ai
+join res_partner_address as ra on ai.address_invoice_id = ra.id
+join res_partner as rp on ai.partner_id = rp.id
+join res_currency as rc on ai.currency_id = rc.id
+join res_users as ru on ai.user_id = ru.id
+where ai.type='out_invoice' and ai.state = 'open'
+group by rp.name, ai.date_invoice, ai.number, ai.amount_total, ai.residual, ai.leyenda_pp, ru.id, ru.name , rc.symbol, ra.city
+order by ru.name,ra.city,ai.date_invoice]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="date_invoice" class="java.sql.Date"/>
+	<field name="number" class="java.lang.String"/>
+	<field name="amount_total" class="java.math.BigDecimal"/>
+	<field name="residual" class="java.math.BigDecimal"/>
+	<field name="leyenda_pp" class="java.lang.String"/>
+	<field name="usuid" class="java.lang.Integer"/>
+	<field name="usuname" class="java.lang.String"/>
+	<field name="symbol" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<group name="usuid">
+		<groupExpression><![CDATA[$F{usuid}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="24" forecolor="#B89F7D" backcolor="#9DB1B8"/>
+					<textField>
+						<reportElement x="592" y="4" width="207" height="20"/>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="12" isBold="true"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$F{usuname}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14">
+				<break>
+					<reportElement x="0" y="7" width="800" height="1"/>
+				</break>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="city">
+		<groupExpression><![CDATA[$F{city}]]></groupExpression>
+		<groupHeader>
+			<band height="26">
+				<rectangle>
+					<reportElement x="0" y="3" width="800" height="20" forecolor="#FEFEFE" backcolor="#D2D2D2"/>
+				</rectangle>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="3" width="299" height="20" forecolor="#010101"/>
+					<textElement>
+						<font fontName="Times New Roman" size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{city}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Clientes">
+		<groupExpression><![CDATA[$F{name}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="0" y="0" width="89" height="20" forecolor="#000000"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Veterinaria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="0" y="30" width="89" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Número]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="89" y="30" width="63" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="152" y="30" width="79" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Importe  ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="323" y="30" width="274" height="20" forecolor="#000000"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[ Pronto Pago]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="89" y="1" width="432" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="244" y="30" width="79" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Saldo]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="1" y="0" width="801" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Facturas de Clientes por Vendedor y Ciudad]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="0" y="0" width="89" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="89" y="0" width="63" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="152" y="0" width="79" height="18"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amount_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="326" y="1" width="274" height="36"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{leyenda_pp}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="231" y="0" width="13" height="18"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $F{symbol}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="36" width="802" height="1" backcolor="#F4ECEC"/>
+			</line>
+			<textField>
+				<reportElement x="244" y="0" width="79" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{residual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="13" forecolor="#D0B48E" backcolor="#9DB1B8"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="762" y="0" width="40" height="13" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="682" y="0" width="80" height="13" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
