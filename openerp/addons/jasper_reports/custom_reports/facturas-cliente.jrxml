@@ -17,10 +17,10 @@
 	<queryString language="xPath">
 		<![CDATA[]]>
 	</queryString>
-	<field name="Total-amount_total" class="java.lang.String">
+	<field name="Total-amount_total" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Total-amount_total]]></fieldDescription>
 	</field>
-	<field name="Fecha_factura-date_invoice" class="java.util.Date">
+	<field name="Fecha_factura-date_invoice" class="java.lang.String">
 		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Fecha_factura-date_invoice]]></fieldDescription>
 	</field>
 	<field name="Fecha_vencimiento-date_due" class="java.lang.String">
@@ -40,6 +40,12 @@
 	</field>
 	<field name="Saldo_pendiente-balance" class="java.lang.String">
 		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Pagos-payment_ids/Saldo_pendiente-balance]]></fieldDescription>
+	</field>
+	<field name="Facturas-invoice_ids" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids]]></fieldDescription>
+	</field>
+	<field name="Simbolo-symbol" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Facturas-invoice_ids/Referencia_factura-invoice_id/Divisa-currency_id/Simbolo-symbol]]></fieldDescription>
 	</field>
 	<variable name="Importe" class="java.lang.String"/>
 	<background>
@@ -77,14 +83,15 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
-			<textField>
-				<reportElement x="200" y="2" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Total-amount_total}]]></textFieldExpression>
+		<band height="43" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{Facturas-invoice_ids} != null && $F{Estado-state} == "open"]]></printWhenExpression>
+			<textField pattern="###0.0">
+				<reportElement x="200" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Total-amount_total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="100" y="2" width="100" height="20"/>
+			<textField pattern="">
+				<reportElement x="101" y="1" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Fecha_factura-date_invoice}]]></textFieldExpression>
 			</textField>
@@ -94,28 +101,26 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Numero-number}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="702" y="2" width="100" height="20"/>
+				<reportElement mode="Opaque" x="702" y="2" width="100" height="20" forecolor="#FFFFFF"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Estado-state}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="300" y="2" width="402" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="352" y="1" width="402" height="40"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Leyenda_pagos-leyenda_pp}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="302" y="1" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Simbolo-symbol}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="5" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
+		<band height="5" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="2" splitType="Stretch"/>

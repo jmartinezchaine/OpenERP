@@ -932,6 +932,11 @@ class stock_picking(osv.osv):
 
     def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
         '''Call after the creation of the invoice line'''
+        sale_line_obj = self.pool.get('sale.order.line')
+        invoice_line_obj = self.pool.get('account.invoice.line')
+        if move_line.sale_line_id:
+            #sale_line_obj.write(cr, uid, [move_line.sale_line_id.id],{'notes': move_line.prodlot_id.name,})
+            invoice_line_obj.write(cr, uid, [invoice_line_id], {'note':  move_line.prodlot_id.name,})
         return
 
     def _invoice_hook(self, cr, uid, picking, invoice_id):

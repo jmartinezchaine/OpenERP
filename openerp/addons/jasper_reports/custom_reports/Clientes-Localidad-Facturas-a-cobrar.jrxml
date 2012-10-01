@@ -4,6 +4,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;invoice_ids&apos;]"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -16,7 +17,7 @@
 	</style>
 	<parameter name="SUBREPORT_DS" class="java.lang.Object"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/jam/soft/src/jasper-openerp/nan_account_forecast/report/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -30,37 +31,89 @@
 	<field name="Nombre_de_usuario-name" class="java.lang.String">
 		<fieldDescription><![CDATA[Comercial-user_id/Nombre_de_usuario-name]]></fieldDescription>
 	</field>
-	<field name="Saldo_pendiente-balance" class="java.lang.String">
+	<field name="Saldo_pendiente-balance" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[Cuenta_a_cobrar-property_account_receivable/Saldo_pendiente-balance]]></fieldDescription>
 	</field>
+	<field name="Facturas-invoice_ids" class="java.lang.String">
+		<fieldDescription><![CDATA[Facturas-invoice_ids]]></fieldDescription>
+	</field>
+	<group name="Vendedor">
+		<groupExpression><![CDATA[$F{Nombre_de_usuario-name}]]></groupExpression>
+		<groupHeader>
+			<band height="26">
+				<printWhenExpression><![CDATA[$F{Facturas-invoice_ids} != null && $F{Facturas-invoice_ids} != "[]"]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="5" y="3" width="791" height="20" backcolor="#F6F4F2"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="505" y="4" width="144" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vendedor]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="650" y="3" width="146" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{Nombre_de_usuario-name}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
 	<group name="Ciudad">
 		<groupExpression><![CDATA[$F{Ciudad-city}]]></groupExpression>
 		<groupHeader>
-			<band height="23">
+			<band height="25">
 				<staticText>
-					<reportElement x="4" y="0" width="68" height="20"/>
+					<reportElement x="5" y="2" width="68" height="20"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Ciudad]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="511" y="0" width="144" height="20"/>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Vendedor]]></text>
-				</staticText>
 				<textField>
-					<reportElement x="72" y="0" width="178" height="20"/>
+					<reportElement x="72" y="2" width="178" height="20"/>
 					<textElement>
-						<font isBold="true"/>
+						<font size="14" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{Ciudad-city}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="660" y="0" width="136" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{Nombre_de_usuario-name}]]></textFieldExpression>
+				<textField pattern="###0.0">
+					<reportElement x="649" y="2" width="147" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Saldo_pendiente-balance}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="251" y="2" width="95" height="20"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Veterinaria]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="345" y="2" width="222" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{Nombre-name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="568" y="2" width="82" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo Pendiente]]></text>
+				</staticText>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="5" y="22" width="791" height="1"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -77,7 +130,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Clientes por Localidad]]></text>
+				<text><![CDATA[Facturas pendientes por Vendedor y Localidad.]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -85,49 +138,19 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="22" splitType="Stretch">
-			<staticText>
-				<reportElement x="4" y="0" width="210" height="20"/>
-				<textElement/>
-				<text><![CDATA[Veterinaria]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="248" y="0" width="147" height="20"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Saldo Pendiente]]></text>
-			</staticText>
-		</band>
+		<band height="20" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="134" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="4" y="0" width="551" height="1"/>
-			</line>
-			<textField>
-				<reportElement x="4" y="2" width="210" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Nombre-name}]]></textFieldExpression>
-			</textField>
+		<band height="42" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="27" width="802" height="93"/>
+				<reportElement x="5" y="4" width="792" height="38"/>
+				<dataSourceExpression><![CDATA[$P{SUBREPORT_DS}]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "facturas-cliente.jasper"]]></subreportExpression>
 			</subreport>
-			<textField>
-				<reportElement x="248" y="1" width="147" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Saldo_pendiente-balance}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
+		<band height="7" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="18" splitType="Stretch">
