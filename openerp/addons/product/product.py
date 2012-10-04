@@ -503,7 +503,7 @@ class product_product(osv.osv):
     _description = "Product"
     _table = "product_product"
     _inherits = {'product.template': 'product_tmpl_id'}
-    _order = 'default_code,name_template'
+    _order = 'name_template,default_code'
     _columns = {
         'qty_available': fields.function(_product_qty_available, type='float', string='Quantity On Hand'),
         'virtual_available': fields.function(_product_virtual_available, type='float', string='Quantity Available'),

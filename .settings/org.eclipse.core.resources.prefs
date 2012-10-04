@@ -8,6 +8,7 @@ encoding//openerp/addons/account_extension_uy/__terp__.py=utf-8
 encoding//openerp/addons/account_extension_uy/partner.py=utf-8
 encoding//openerp/addons/account_payment/account_payment.py=utf-8
 encoding//openerp/addons/nan_account_extension/partner.py=latin1
+encoding//openerp/addons/product/product.py=utf-8
 encoding//openerp/addons/sale_early_payment_discount/account_invoice.py=utf-8
 encoding//openerp/addons/sale_early_payment_discount/partner.py=utf-8
 encoding//openerp/addons/sale_early_payment_discount/partner_payment_term_early_discount.py=utf-8
