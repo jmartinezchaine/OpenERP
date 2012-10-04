@@ -36,6 +36,12 @@ order by ru.name,ra.city,ai.date_invoice]]>
 	<field name="city" class="java.lang.String"/>
 	<field name="street" class="java.lang.String"/>
 	<field name="phone" class="java.lang.String"/>
+	<variable name="SaldoCliente" class="java.math.BigDecimal" resetType="Group" resetGroup="Clientes" calculation="Sum">
+		<variableExpression><![CDATA[$F{residual}]]></variableExpression>
+	</variable>
+	<variable name="TotalCliente" class="java.math.BigDecimal" resetType="Group" resetGroup="Clientes" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount_total}]]></variableExpression>
+	</variable>
 	<group name="usuid">
 		<groupExpression><![CDATA[$F{usuid}]]></groupExpression>
 		<groupHeader>
@@ -53,7 +59,7 @@ order by ru.name,ra.city,ai.date_invoice]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="14">
+			<band height="10">
 				<break>
 					<reportElement x="0" y="7" width="800" height="1"/>
 				</break>
@@ -65,7 +71,7 @@ order by ru.name,ra.city,ai.date_invoice]]>
 		<groupHeader>
 			<band height="26">
 				<rectangle>
-					<reportElement x="0" y="3" width="800" height="20" forecolor="#FEFEFE" backcolor="#D2D2D2"/>
+					<reportElement x="0" y="3" width="802" height="20" forecolor="#FEFEFE" backcolor="#D2D2D2"/>
 				</rectangle>
 				<textField isBlankWhenNull="true">
 					<reportElement positionType="Float" x="0" y="3" width="299" height="20" forecolor="#010101"/>
@@ -81,13 +87,9 @@ order by ru.name,ra.city,ai.date_invoice]]>
 		<groupExpression><![CDATA[$F{name}]]></groupExpression>
 		<groupHeader>
 			<band height="50">
-				<staticText>
-					<reportElement style="Column header" positionType="Float" x="0" y="0" width="89" height="20" forecolor="#000000"/>
-					<textElement>
-						<font fontName="DejaVu Sans" size="10" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Veterinaria]]></text>
-				</staticText>
+				<rectangle>
+					<reportElement x="0" y="0" width="802" height="20" forecolor="#FEFEFE" backcolor="#E8E8E8"/>
+				</rectangle>
 				<staticText>
 					<reportElement style="Column header" positionType="Float" x="0" y="30" width="89" height="20" forecolor="#000000"/>
 					<textElement textAlignment="Right">
@@ -110,11 +112,11 @@ order by ru.name,ra.city,ai.date_invoice]]>
 					<text><![CDATA[Importe  ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" positionType="Float" x="323" y="30" width="274" height="20" forecolor="#000000"/>
+					<reportElement style="Column header" positionType="Float" x="334" y="30" width="274" height="20" forecolor="#000000"/>
 					<textElement>
 						<font fontName="DejaVu Sans" isBold="false"/>
 					</textElement>
-					<text><![CDATA[ Pronto Pago]]></text>
+					<text><![CDATA[ Comentario factura]]></text>
 				</staticText>
 				<textField>
 					<reportElement style="Detail" x="89" y="1" width="359" height="20"/>
@@ -144,19 +146,55 @@ order by ru.name,ra.city,ai.date_invoice]]>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{phone}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="2" y="1" width="89" height="20" forecolor="#000000"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Veterinaria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="608" y="30" width="107" height="20" forecolor="#000000"/>
+					<textElement>
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Última Visita]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="715" y="30" width="89" height="20" forecolor="#000000"/>
+					<textElement>
+						<font fontName="DejaVu Sans" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Fecha agendado]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band/>
+			<band height="21">
+				<textField>
+					<reportElement x="244" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SaldoCliente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="181" y="0" width="62" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="DejaVu Sans" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotalCliente}]]></textFieldExpression>
+				</textField>
+			</band>
 		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="24" splitType="Stretch">
+		<band height="58" splitType="Stretch">
 			<staticText>
-				<reportElement style="Column header" x="1" y="0" width="801" height="19"/>
+				<reportElement style="Column header" x="299" y="0" width="503" height="19"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="14" isBold="false"/>
 				</textElement>
@@ -171,7 +209,7 @@ order by ru.name,ra.city,ai.date_invoice]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="0" y="0" width="89" height="18"/>
 				<textElement textAlignment="Right">
@@ -187,28 +225,28 @@ order by ru.name,ra.city,ai.date_invoice]]>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="168" y="0" width="63" height="18"/>
+				<reportElement style="Detail" positionType="Float" x="181" y="1" width="63" height="18"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="10" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{amount_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="326" y="1" width="287" height="36"/>
+				<reportElement style="Detail" positionType="Float" x="334" y="1" width="274" height="19"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{leyenda_pp}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="231" y="0" width="13" height="18"/>
+				<reportElement style="Detail" positionType="Float" x="168" y="0" width="13" height="18"/>
 				<textElement>
 					<font fontName="DejaVu Serif" size="12" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $F{symbol}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="36" width="802" height="1" backcolor="#F4ECEC"/>
+				<reportElement x="2" y="27" width="802" height="1" backcolor="#F4ECEC"/>
 			</line>
 			<textField>
 				<reportElement style="Detail" x="244" y="0" width="79" height="20"/>

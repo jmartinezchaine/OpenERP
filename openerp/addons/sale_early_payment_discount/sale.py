@@ -106,7 +106,20 @@ class sale_order(osv.osv):
         #    multi='epd'),
         'leyenda_pp': fields.text('Leyenda pagos'),
         #'miembros_list': fields.function(_get_miembros_del_proyecto, method=True, type='char', string='Miembros del Equipo', store=False),
+        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
     }
+    
+    #def onchange_payment_term(self, cr, uid, ids, payment_term=False, context=None):
+    #    result = {}
+    #    if payment_term:
+    #        # Preguntar si es contado y asignar el Diario Contado.
+    #        diarios = self.pool.get('account.journal').search(cr, uid, [
+    #                                ('code', '=', 'VCONTADO')])
+    #        if diarios:
+    #            journal_id = diarios[0]
+    #            #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+    #            result = {'value': {'journal_id': journal_id,}}
+    #    return result
 
     def onchange_partner_id2(self, cr, uid, ids, part,
                              early_payment_discount=False, payment_term=False):
@@ -137,6 +150,16 @@ class sale_order(osv.osv):
         early_discs = []
         res = {}
         if payment_term:
+            
+            
+            # Preguntar si es contado y asignar el Diario Contado.
+            diarios = self.pool.get('account.journal').search(cr, uid, [
+                                    ('code', '=', 'VCONTADO')])
+            if diarios:
+                journal_id = diarios[0]
+                #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+                res['journal_id'] = journal_id
+            
             early_discs = early_discount_obj.search(cr, uid, [
                                     ('partner_id', '=', part),
                                     ('payment_term_id', '=', payment_term)])
@@ -190,8 +213,12 @@ class sale_order(osv.osv):
         return True
     
     def write(self, cr, uid, ids, vals, context=None):
-        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
-        vals.update(up_leyenda)
+        journal_id = self.journal_id.id
+        journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+        # Si eldiario es contado entonces no lleva la leyenda.
+        if journal.code != 'VCONTADO':
+            up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+            vals.update(up_leyenda)
         return super(sale_order, self).write(cr, uid, ids, vals, context)
     
     def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):
