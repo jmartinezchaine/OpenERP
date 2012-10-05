@@ -14,6 +14,7 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="CIUDAD" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[select rp.name, ai.date_invoice, ai.number, ai.amount_total, ai.residual, ai.leyenda_pp, ru.id usuid, ru.name usuname, rc.symbol, ra.city, ra.street, ra.phone from account_invoice as ai
 join res_partner_address as ra on ai.address_invoice_id = ra.id
@@ -200,6 +201,11 @@ order by ru.name,ra.city,ai.date_invoice]]>
 				</textElement>
 				<text><![CDATA[Facturas de Clientes por Vendedor y Ciudad]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="74" y="23" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{CIUDAD}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

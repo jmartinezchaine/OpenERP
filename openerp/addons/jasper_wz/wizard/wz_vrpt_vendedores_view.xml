@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- Wizard de reporte de Vendedores Form View -->
+
+		<record id="view_jasper_wz" model="ir.ui.view">
+			<field name="name">Wizard Reporte Vendedores</field>
+			<field name="model">wz.rpt.vendedores</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Filtro de Clientes">
+					<group colspan="4">
+						<field name="vendedores" colspan="2" />
+						<!-- field name="todos_vendedores" colspan="2"/-->
+						<field name="ciudad" colspan="2" />
+					</group>
+					<separator string="" colspan="4" />
+					<group colspan="4" col="6">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button icon="gtk-go-forward" name="print_invoice" string="Print" type="object"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<!-- Post para el reporte de Vendedores Action -->
+ 		<act_window name="Clientes por Vendedor"
+            res_model="wz.rpt.vendedores"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wz_rpt_vendedores"
+            view_id="view_jasper_wz"/>
+		
+
+ 		 <report string="Clientes por Vendedor"
+			model="account.invoice"
+			auto="True"
+			name="jasper_clientes_vendedor_ciudad"
+			rml="jasper_wz/report/Facturas_vendedor_ciudad_cliente.jrxml"
+			id="jasper_clientes_vendedor_ciudad"
+			menu="False"
+			/>
+ 		
+ 		 <menuitem id="submenu_clienntes" name="Clientes por Vendedor"
+                    action="action_wz_rpt_vendedores"
+                     />
+		<!-- menuitem action="action_libro_prestar" id="menu_libro_prestar"
+			parent="menu_biblioteca" /-->
+
+	</data>
+</openerp>
