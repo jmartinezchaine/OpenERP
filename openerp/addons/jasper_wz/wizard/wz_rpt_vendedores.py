@@ -65,9 +65,9 @@ class wz_rpt_vendedores(osv.osv_memory):
             if vendedor:
                 #sql = "select rp.id, rp.name, ru.id usuid, ru.name usuname, ra.city, ra.street, ra.phone from res_partner as rp"
                 sql = " LEFT JOIN res_partner_address as ra on ra.partner_id = rp.id"
-                sql += " JOIN res_users as ru on rp.user_id = ru.id and ru.id = '"+vendedor+"'"
+                sql += " JOIN res_users as ru on rp.user_id = ru.id and ru.id = "+vendedor
                 sql += " group by rp.id, rp.name, ru.id, ru.name , ra.city, ra.street, ra.phone"
-                sql += "order by ru.name,ra.city"
+                sql += " order by ru.name,ra.city"
                 #parameters.update({'VENDEDOR': vendedor})
             if ciudad:
                 #sql = "select rp.id, rp.name, ru.id usuid, ru.name usuname, ra.city, ra.street, ra.phone from res_partner as rp"
@@ -79,11 +79,11 @@ class wz_rpt_vendedores(osv.osv_memory):
             if vendedor and ciudad:    
                 #sql = "select rp.id, rp.name, ru.id usuid, ru.name usuname, ra.city, ra.street, ra.phone from res_partner as rp"
                 sql = " JOIN res_partner_address as ra on ra.partner_id = rp.id and ra.city = '"+ciudad+"'"
-                sql += " JOIN res_users as ru on rp.user_id = ru.id and ru.id ='"+vendedor+"'"
-                sql += " group by rp.id, rp.name, ru.id, ru.name , ra.city, ra.street, ra.phone"
+                sql += " JOIN res_users as ru on rp.user_id = ru.id and ru.id ="+vendedor
+                sql += " group by rp.id, rp.name, ru.id, ru.name , ra.city, ra.street, ra.phone "
                 sql += " order by ru.name,ra.city"
                 #parameters.update({'CIUDAD': ciudad})
-                
+            print sql    
             parameters.update({str('SQL'): str(sql)})    
             datas['parameters'] = parameters
         
