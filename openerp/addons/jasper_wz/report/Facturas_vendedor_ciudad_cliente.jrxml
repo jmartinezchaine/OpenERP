@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Facturas_Vendedor_Ciudad_Cliente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="template.type" value="columnar"/>
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
@@ -77,14 +77,14 @@
 	<group name="Clientes">
 		<groupExpression><![CDATA[$F{name}]]></groupExpression>
 		<groupHeader>
-			<band height="23">
+			<band height="34">
 				<rectangle>
 					<reportElement x="0" y="0" width="802" height="20" forecolor="#FEFEFE" backcolor="#E8E8E8"/>
 				</rectangle>
 				<textField>
 					<reportElement style="Detail" x="89" y="1" width="359" height="20"/>
 					<textElement>
-						<font fontName="DejaVu Sans" size="14" isBold="true"/>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
@@ -96,8 +96,8 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{street}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="712" y="0" width="87" height="20"/>
-					<textElement>
+					<reportElement x="448" y="14" width="351" height="20"/>
+					<textElement verticalAlignment="Bottom">
 						<font fontName="DejaVu Sans"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{phone}]]></textFieldExpression>
