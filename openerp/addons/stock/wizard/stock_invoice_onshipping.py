@@ -141,7 +141,7 @@ class stock_invoice_onshipping(osv.osv_memory):
         journal_obj = self.pool.get('account.journal')
         
         if active_picking.type == 'out' and inv_type == 'out_invoice':
-            sale = active_picking.sale_id.id
+            sale = active_picking.sale_id
             journal_id_sale = sale.journal_id.id
             res = picking_pool.action_invoice_create(cr, uid, active_ids,
                   journal_id = journal_id_sale,
