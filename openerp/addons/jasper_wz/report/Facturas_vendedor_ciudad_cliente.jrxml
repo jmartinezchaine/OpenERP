@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Facturas_Vendedor_Ciudad_Cliente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Facturas_Vendedor_Ciudad_Cliente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10">
 	<property name="template.type" value="columnar"/>
 	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
@@ -36,13 +36,13 @@
 	<group name="usuid">
 		<groupExpression><![CDATA[$F{usuid}]]></groupExpression>
 		<groupHeader>
-			<band height="25">
+			<band height="15">
 				<frame>
-					<reportElement mode="Opaque" x="0" y="0" width="802" height="24" forecolor="#B89F7D" backcolor="#9DB1B8"/>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="13" forecolor="#B89F7D" backcolor="#9DB1B8"/>
 					<textField>
-						<reportElement style="Detail" x="592" y="4" width="207" height="20"/>
+						<reportElement style="Detail" x="592" y="0" width="207" height="13"/>
 						<textElement textAlignment="Right">
-							<font fontName="DejaVu Sans" size="12" isBold="true"/>
+							<font fontName="DejaVu Sans" size="10" isBold="true"/>
 						</textElement>
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{usuname}]]></textFieldExpression>
 					</textField>
@@ -50,24 +50,20 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="10">
-				<break>
-					<reportElement x="0" y="7" width="800" height="1"/>
-				</break>
-			</band>
+			<band/>
 		</groupFooter>
 	</group>
 	<group name="city">
 		<groupExpression><![CDATA[$F{city}]]></groupExpression>
 		<groupHeader>
-			<band height="26">
+			<band height="17">
 				<rectangle>
-					<reportElement x="0" y="3" width="802" height="20" forecolor="#FEFEFE" backcolor="#D2D2D2"/>
+					<reportElement x="0" y="0" width="802" height="17" forecolor="#FEFEFE" backcolor="#D2D2D2"/>
 				</rectangle>
 				<textField isBlankWhenNull="true">
-					<reportElement positionType="Float" x="0" y="3" width="299" height="20" forecolor="#010101"/>
-					<textElement>
-						<font fontName="DejaVu Sans" size="16" isBold="false"/>
+					<reportElement positionType="Float" x="0" y="0" width="299" height="17" forecolor="#010101"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{city}]]></textFieldExpression>
 				</textField>
@@ -77,70 +73,91 @@
 	<group name="Clientes">
 		<groupExpression><![CDATA[$F{name}]]></groupExpression>
 		<groupHeader>
-			<band height="34">
+			<band height="28">
 				<rectangle>
-					<reportElement x="0" y="0" width="802" height="20" forecolor="#FEFEFE" backcolor="#E8E8E8"/>
+					<reportElement x="0" y="0" width="802" height="14" forecolor="#FEFEFE" backcolor="#E8E8E8"/>
 				</rectangle>
 				<textField>
-					<reportElement style="Detail" x="89" y="1" width="359" height="20"/>
+					<reportElement style="Detail" x="59" y="1" width="359" height="13"/>
 					<textElement>
-						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+						<font fontName="DejaVu Sans" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="448" y="1" width="352" height="20"/>
+					<reportElement x="417" y="1" width="352" height="13"/>
 					<textElement>
 						<font fontName="DejaVu Sans"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{street}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement x="448" y="14" width="351" height="20"/>
-					<textElement verticalAlignment="Bottom">
-						<font fontName="DejaVu Sans"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{phone}]]></textFieldExpression>
-				</textField>
 				<staticText>
-					<reportElement style="Column header" positionType="Float" x="2" y="1" width="89" height="20" forecolor="#000000"/>
+					<reportElement style="Column header" positionType="Float" x="592" y="14" width="107" height="13" forecolor="#000000"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Última Visita]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="2" y="1" width="56" height="13" forecolor="#000000"/>
 					<textElement>
 						<font fontName="DejaVu Sans" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Veterinaria]]></text>
 				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="699" y="14" width="100" height="13" forecolor="#000000"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="10" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Fecha agendado]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="644" y="1" width="155" height="13"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{phone}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="2"/>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="84" splitType="Stretch">
+		<band height="43" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="802" height="84"/>
+				<reportElement x="0" y="0" width="802" height="43"/>
 			</rectangle>
-			<image>
-				<reportElement x="2" y="1" width="197" height="82"/>
-				<imageExpression class="java.lang.String"><![CDATA["logo01.jpeg"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement style="Column header" x="199" y="21" width="603" height="21"/>
+				<reportElement style="Column header" x="135" y="0" width="603" height="13"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Laboratorio Unimedical]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="199" y="0" width="603" height="21"/>
-				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="14" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Listado de Clientes ]]></text>
 			</staticText>
+			<image>
+				<reportElement x="2" y="1" width="106" height="42"/>
+				<imageExpression class="java.lang.String"><![CDATA["logo01.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Column header" x="134" y="14" width="603" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laboratorio Unimedical]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="134" y="28" width="603" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -150,11 +167,14 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="802" height="22"/>
+				<reportElement x="0" y="0" width="802" height="15"/>
 				<subreportParameter name="partner_id">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="city">
+					<subreportParameterExpression><![CDATA[$F{city}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "facturas_cliente.jasper"]]></subreportExpression>
@@ -162,13 +182,16 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch">
+		<band height="5" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<break>
+				<reportElement x="0" y="4" width="800" height="1"/>
+			</break>
 		</band>
 	</columnFooter>
 	<pageFooter>

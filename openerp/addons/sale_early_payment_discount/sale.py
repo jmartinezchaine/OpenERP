@@ -106,7 +106,7 @@ class sale_order(osv.osv):
         #    multi='epd'),
         'leyenda_pp': fields.text('Leyenda pagos'),
         #'miembros_list': fields.function(_get_miembros_del_proyecto, method=True, type='char', string='Miembros del Equipo', store=False),
-        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly', False)]}),
     }
     
     #def onchange_payment_term(self, cr, uid, ids, payment_term=False, context=None):
@@ -153,12 +153,14 @@ class sale_order(osv.osv):
             
             
             # Preguntar si es contado y asignar el Diario Contado.
-            diarios = self.pool.get('account.journal').search(cr, uid, [
+            if payment_term == 1:
+                # es contado
+                diarios = self.pool.get('account.journal').search(cr, uid, [
                                     ('code', '=', 'VCONTADO')])
-            if diarios:
-                journal_id = diarios[0]
-                #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
-                res['journal_id'] = journal_id
+                if diarios:
+                    journal_id = diarios[0]
+                    #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+                    res['journal_id'] = journal_id
             
             early_discs = early_discount_obj.search(cr, uid, [
                                     ('partner_id', '=', part),
@@ -213,12 +215,17 @@ class sale_order(osv.osv):
         return True
     
     def write(self, cr, uid, ids, vals, context=None):
-        journal_id = self.journal_id.id
+        current_sale = self.browse(cr, uid, ids, context=context)[0]
+        journal_id = current_sale.journal_id.id
         journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
         # Si eldiario es contado entonces no lleva la leyenda.
-        if journal.code != 'VCONTADO':
+        if journal.code != 'VCONT':
             up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
             vals.update(up_leyenda)
+            prop_id = self.pool.get('ir.property').search(cr, uid, [('name', '=', 'property_leyenda_ventas')], context=context)
+            prop_nota_venta = self.pool.get('ir.property').browse(cr, uid, prop_id, context=context)[0]
+            if prop_nota_venta:
+                vals.update({'note':prop_nota_venta.value_text})
         return super(sale_order, self).write(cr, uid, ids, vals, context)
     
     def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):
@@ -272,10 +279,15 @@ class sale_order(osv.osv):
         
                 # actualizar leyenda
                 
-                leyendas.append(['fecha', next_date.strftime("%d/%m/%Y"), 'monto', moneda+ ' ' + str(monto_descuento)]) 
+                leyendas.append(['fecha', next_date.strftime("%d/%m/%Y"), 'monto', moneda + ' ' + str(monto_descuento)]) 
                 
+            cont = 0     
             for ly in leyendas: 
-                texto += '%s %s | ' % (ly[1], ly[3])
+                cont = cont + 1
+                if cont > 1:
+                    texto += '\t \t \t \t \t %s %s' % (ly[1], ly[3])
+                else:
+                    texto += '  %s %s \n' % (ly[1], ly[3])    
             up_leyenda = {'leyenda_pp': 'Abonando antes de: ' + texto}
         return up_leyenda
     

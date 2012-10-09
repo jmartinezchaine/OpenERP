@@ -118,8 +118,13 @@ class account_invoice(osv.osv):
 
 
     def write(self, cr, uid, ids, vals, context=None):
-        up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
-        vals.update(up_leyenda)
+        current_sale = self.browse(cr, uid, ids, context=context)[0]
+        journal_id = current_sale.journal_id.id
+        journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+        # Si eldiario es contado entonces no lleva la leyenda.
+        if journal.code != 'VCONT':
+            up_leyenda = self.calcular_pronto_pagos(cr, uid, ids, vals, context)
+            vals.update(up_leyenda)
         return super(account_invoice, self).write(cr, uid, ids, vals, context)
 
     def calcular_pronto_pagos(self, cr, uid, ids, vals, context=None):

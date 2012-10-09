@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+         <record model="ir.ui.view" id="sale_view_inherit123">
+            <field name="name">sale.order.journal</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="project_id" position="after">
+                 <field name="payment_term" on_change="onchange_payment_term(payment_term, partner_id)"> </field>
+        		 <field name="journal_id"> </field>
+                </field>
+            </field>
+        </record>
+        
+       
 
 
     </data>
