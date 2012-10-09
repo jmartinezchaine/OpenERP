@@ -537,7 +537,7 @@ stock_tracking()
 class stock_picking(osv.osv):
     _name = "stock.picking"
     _description = "Picking List"
-    _order = 'origin, name'
+    _order = 'origin desc, name desc'
 
     def _set_maximum_date(self, cr, uid, ids, name, value, arg, context=None):
         """ Calculates planned date if it is greater than 'value'.

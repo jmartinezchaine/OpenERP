@@ -10,6 +10,7 @@
                 <field name="project_id" position="after">
                  <field name="payment_term" on_change="onchange_payment_term(payment_term, partner_id)"> </field>
         		 <field name="journal_id"> </field>
+        		 <field name="early_payment_discount"> </field>
                 </field>
             </field>
         </record>
