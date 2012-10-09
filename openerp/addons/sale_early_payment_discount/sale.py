@@ -161,6 +161,9 @@ class sale_order(osv.osv):
                     journal_id = diarios[0]
                     #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
                     res['journal_id'] = journal_id
+            if payment_term != 1:
+                # NO es contado
+                    res['journal_id'] = 0
             
             early_discs = early_discount_obj.search(cr, uid, [
                                     ('partner_id', '=', part),
