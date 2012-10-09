@@ -156,7 +156,7 @@ class sale_order(osv.osv):
             if payment_term == 1:
                 # es contado
                 diarios = self.pool.get('account.journal').search(cr, uid, [
-                                    ('code', '=', 'VCONTADO')])
+                                    ('code', '=', 'VCONT')])
                 if diarios:
                     journal_id = diarios[0]
                     #journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
