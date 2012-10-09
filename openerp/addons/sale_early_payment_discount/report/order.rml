@@ -251,7 +251,7 @@
             <para style="terp_default_Centre_9">[[ ', '.join(map(lambda x: x.name, line.tax_id)) ]]</para>
           </td>
           <td>
-            <para style="terp_default_9">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty) ]] </para>
+            <para style="terp_default_9">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty, digits=1) ]] </para>
           </td>
           <td>
             <para style="terp_default_Right_9">[[ line.product_uos and line.product_uos.name or line.product_uom.name ]]</para>
@@ -357,7 +357,7 @@
           <para style="terp_default_9">[[ o.early_payment_discount and ' ' or removeParentNode('tr') ]]</para>
         </td>
         <td>
-          <para style="terp_default_9">E.P. Disc. :</para>
+          <para style="terp_default_9">Descuento :</para>
         </td>
         <td>
           <para style="terp_default_Right_9">[[ str(formatLang(o.early_payment_discount)) + ' %' ]] </para>
@@ -373,7 +373,7 @@
           <para style="terp_default_9">[[ o.early_payment_discount and ' ' or removeParentNode('tr') ]]</para>
         </td>
         <td>
-          <para style="terp_default_Bold_9">With E.P. :</para>
+          <para style="terp_default_Bold_9">Total Contado :</para>
         </td>
         <td>
           <para style="terp_default_Right_9_Bold">[[ formatLang(o.early_payment_disc_total) ]] </para>
@@ -391,11 +391,6 @@
         <td>
           <para style="terp_default_9">[[ format(o.note or '') ]]</para>
           <para style="terp_default_Bold_10">[[ format(o.leyenda_pp or '')]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_default_9">[[ format((o.partner_id.property_payment_term and o.partner_id.property_payment_term.note) or '') ]]</para>
         </td>
       </tr>
     </blockTable>
